@@ -1,0 +1,422 @@
+/* === VARIABLES === */
+:root {
+    --magnet-red: #C41230;
+    --magnet-blue: #003B79;
+    --magnet-gradient: linear-gradient(135deg, var(--magnet-red), var(--magnet-blue));
+    --bg-gradient: linear-gradient(to bottom right, #0a0e14, #1a202c);
+    --text-color: #ffffff;
+    --card-bg: #1a202c;
+    --nav-bg: rgba(10, 14, 20, 0.95);
+    --shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --bg-gradient: linear-gradient(to bottom right, #f0f4f8, #d9e2ec);
+        --text-color: #333;
+        --card-bg: #ffffff;
+        --nav-bg: rgba(255, 255, 255, 0.98);
+    }
+}
+
+html { scroll-behavior: smooth; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Montserrat', sans-serif; background: var(--bg-gradient); color: var(--text-color); }
+
+/* === LAYOUT === */
+.container { padding: 100px 20px; max-width: 1200px; margin: 0 auto; }
+h1, h2, h3 { font-weight: 900; }
+.red-accent { color: var(--magnet-red); }
+.blue-accent { color: var(--magnet-blue); }
+.divider { height: 4px; width: 80px; margin: 15px auto 30px auto; border-radius: 4px; }
+.divider-red { background: var(--magnet-red); }
+.divider-blue { background: var(--magnet-blue); }
+
+/* === NAVBAR === */
+.navbar {
+    position: fixed; /* Follows the user */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    
+    /* ANIMATION SETTINGS */
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+/* 1. HIDES the navbar (Slides it up out of view) */
+.nav-hidden {
+    transform: translateY(-100%);
+}
+
+/* 2. SOLID BACKGROUND (Used when scrolling up over white sections) */
+.nav-solid {
+    background: rgba(0, 0, 0, 0.95); /* Solid black */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+/* 3. TRANSPARENT (Used only at the very top) */
+.nav-transparent {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+}
+.site-logo { height: 45px; width: auto; }
+.nav-links { list-style: none; display: flex; gap: 30px; }
+.nav-links a { color: var(--text-color); text-decoration: none; font-weight: 700; text-transform: uppercase; font-size: 0.9rem; transition: color 0.3s; }
+.nav-links a:hover { color: var(--magnet-red); }
+
+/* === CUSTOM PLAY BUTTON OVERLAY === */
+.play-btn {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%); /* Perfectly centered */
+    width: 70px; height: 70px;
+    background: rgba(0, 0, 0, 0.6);   /* Dark see-through background */
+    border-radius: 50%;               /* Circle */
+    color: white;
+    font-size: 30px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+    backdrop-filter: blur(4px);       /* Glass effect */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding-left: 5px; /* Visual tweak to center the triangle */
+}
+
+.play-btn:hover {
+    background: var(--magnet-red); /* Glows red when you touch it */
+    transform: translate(-50%, -50%) scale(1.1);
+    border-color: var(--magnet-red);
+}
+
+/* Helper class to hide it when playing */
+.play-btn.hidden {
+    opacity: 0;
+    pointer-events: none; /* Lets you click the video controls underneath */
+}
+
+/* === HERO SECTION === */
+.hero-section {
+    position: relative;
+    height: 100vh;          /* Full screen height */
+    width: 100%;
+    display: flex;          /* Centering magic */
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;       /* Crops the video if it's too big */
+    text-align: center;
+}
+
+#bg-video {
+    position: absolute;     /* Takes video out of the "flow" */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;      /* Ensures no black bars */
+    z-index: -1;            /* Puts it behind everything */
+}
+
+.overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Darkens video by 60% */
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;             /* Puts text on top of overlay */
+    padding: 20px;
+}
+
+/* === BUTTONS === */
+.btn {
+    display: inline-block;
+    padding: 12px 35px;
+    margin-top: 25px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: white;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative; /* Needed for the gradient trick */
+}
+
+/* The new "Magnet Mix" Glow Style */
+.btn-glow {
+    /* This creates a gradient border that follows the rounded corners */
+    background: linear-gradient(#0a0a0a, #0a0a0a) padding-box, /* Dark inner background */
+                linear-gradient(45deg, var(--magnet-red), var(--magnet-blue)) border-box; /* The gradient border */
+    border: 2px solid transparent; /* Transparent border lets the gradient show through */
+    
+    /* Layered Glow: A tight red glow and a wider blue glow mixed together */
+    box-shadow: 0 0 15px rgba(255, 20, 20, 0.6), 
+                0 0 30px rgba(20, 100, 255, 0.4);
+
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Hover Effect - Full Gradient Fill */
+.btn-glow:hover {
+    /* The background becomes the full gradient */
+    background: linear-gradient(45deg, var(--magnet-red), var(--magnet-blue));
+    
+    /* The glow gets massive and mixed */
+    box-shadow: 0 0 40px var(--magnet-red), 
+                0 0 60px var(--magnet-blue);
+                
+    transform: translateY(-3px);
+}
+
+/* === ABOUT SECTION === */
+.about-section {
+    padding-bottom: 20px; /* Reduces gap before the next section */
+}
+
+.mission-box {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.mission-box h2 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.mission-text {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #ccc; /* Light grey for readability */
+    margin-top: 30px;
+}
+
+.mission-text strong {
+    color: white;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Mobile Tweak: Make text slightly smaller on phones */
+@media (max-width: 768px) {
+    .mission-box h2 { font-size: 2rem; }
+    .mission-text { font-size: 1rem; }
+}
+
+/* === GRIDS & CARDS === */
+.reels-grid { 
+    display: grid; 
+    /* FIXED: Increased to 300px so embeds aren't squeezed */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 30px; 
+    margin-top: 40px; 
+}
+
+.reel-card { 
+    background: var(--card-bg); 
+    border-radius: 16px; 
+    padding: 12px; 
+    box-shadow: var(--shadow); 
+    text-align: center; 
+    transition: transform 0.3s; 
+}
+
+.reel-card:hover { transform: translateY(-5px); }
+.featured-grid .reel-card { border-top: 5px solid var(--magnet-red); }
+.catalog-grid .reel-card { border-top: 5px solid var(--magnet-blue); }
+
+.video-wrapper-clean, .insta-wrapper { 
+    position: relative; 
+    width: 100%; 
+    aspect-ratio: 9/16; 
+    border-radius: 10px; 
+    overflow: hidden; 
+    background: #000; 
+}
+
+.insta-wrapper { 
+    position: relative; 
+    width: 100%; 
+    padding-top: 180%; 
+    
+    /* CHANGED: Use dark background instead of white */
+    background: var(--card-bg); 
+    
+    border-radius: 10px; 
+    overflow: hidden; 
+}
+.clean-video { width: 100%; height: 100%; object-fit: cover; }
+.reel-iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+.reel-card h3 { font-size: 1.1rem; margin-top: 15px; }
+/* === FOOTER & CONTACT (NEW) === */
+.controls { text-align: center; margin-bottom: 30px; }
+.refresh-btn { background: transparent; border: 2px solid var(--magnet-blue); color: var(--text-color); padding: 10px 30px; border-radius: 30px; cursor: pointer; font-weight: 700; display: inline-flex; gap: 10px; transition: 0.3s; }
+.refresh-btn:hover { background: var(--magnet-blue); color: white; }
+
+.footer-section { text-align: center; padding-bottom: 50px; }
+/* CONTAINER: Controls the stack and spacing */
+.contact-details { 
+    margin-top: 50px;       
+    display: flex;          
+    flex-direction: column; /* Stack vertically */
+    align-items: center;    /* Center the stack */
+    gap: 20px;              /* EXACT equal vertical distance */
+}
+
+/* BUTTONS: Controls the look and size */
+.contact-link { 
+    color: var(--text-color); 
+    text-decoration: none; 
+    font-size: 1.1rem; 
+    font-weight: bold; 
+    padding: 12px 20px; /* Comfortable internal padding */
+    border: 1px solid rgba(255,255,255,0.1); 
+    border-radius: 8px; 
+    transition: 0.3s; 
+    
+    /* NEW: Makes them all the same width for a clean look */
+    width: 280px;           
+    text-align: center;     
+    display: flex;          
+    justify-content: center; /* Centers text inside the button */
+    align-items: center;
+    gap: 10px;              /* Space between icon and text */
+    margin: 0;              /* Reset margins so 'gap' works perfectly */
+}
+
+.contact-link:hover { 
+    background: var(--magnet-blue); 
+    border-color: var(--magnet-blue); 
+    color: white; 
+}
+.footer-logo { height: 30px; filter: grayscale(100%); margin-top: 40px; transition: 0.3s; }
+.footer-logo:hover { filter: grayscale(0%); }
+.copyright { color: #888; font-size: 0.8rem; margin-top: 10px; }
+
+/* SMOOTH LOOP ANIMATION */
+@keyframes smoothLoop {
+    0% { opacity: 0; }
+    10% { opacity: 0.8; } /* Fades in quickly */
+    90% { opacity: 0.8; } /* Stays visible */
+    100% { opacity: 0; }  /* Fades out at the end */
+}
+
+/* Apply it to the background video */
+#bg-video {
+    /* Adjust '15s' to match the EXACT length of your video */
+    animation: smoothLoop 10s infinite linear;
+}
+
+/* IMPORT ARABIC FONT (Add this at the very top of style.css) */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+
+/* === LANGUAGE SWITCHER LOGIC === */
+/* Default (English) */
+.ar { display: none; }
+
+/* Arabic Mode (Activated by JS) */
+body.arabic-mode {
+    direction: rtl;                 /* Flips layout right-to-left */
+    font-family: 'Cairo', sans-serif; /* Changes font to Arabic style */
+}
+
+/* Hide English / Show Arabic when active */
+body.arabic-mode .en { display: none; }
+body.arabic-mode .ar { display: block; }
+
+/* Fix Footer Alignment in Arabic */
+body.arabic-mode .footer-section h2 {
+    font-family: 'Cairo', sans-serif;
+    font-weight: 900;
+}
+
+/* FORCE PHONE NUMBER LTR */
+/* This ensures the number reads correctly (+962...) even in Arabic mode */
+.contact-link[href^="tel"] {
+    direction: ltr !important; 
+    unicode-bidi: embed;
+    text-align: left; /* Optional: keeps it aligned if you prefer */
+}
+
+/* If the Arabic text aligns right, we might want the number to align right too, 
+   but keep the internal order LTR. */
+body.arabic-mode .contact-link[href^="tel"] {
+    text-align: right; 
+}
+
+/* === FORCE NAVBAR TO STAY LTR === */
+body.arabic-mode .navbar {
+    /* This overrides the global RTL setting ONLY for the header */
+    direction: ltr !important; 
+}
+
+/* Optional: Ensure the spacing in the list stays correct */
+body.arabic-mode .nav-links {
+    padding-left: 0; /* Reset any RTL padding flips */
+    padding-right: 0;
+}
+
+/* === MOBILE NAVBAR FIX (Transparent Overlay) === */
+@media screen and (max-width: 768px) {
+    
+    .navbar {
+        /* Force vertical stack but KEEP it transparent */
+        flex-direction: column !important; 
+        height: auto !important;           
+        padding: 15px 10px !important;     
+        justify-content: flex-start !important; 
+        
+        /* The "Like PC" Gradient: Dark at top, fades to clear at bottom */
+        background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 70%, transparent 100%);
+    }
+
+    /* Center the Logo */
+    .logo-container {
+        margin-bottom: 10px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .site-logo {
+        height: 40px; 
+    }
+
+    /* Center the Links */
+    .nav-links {
+        display: flex !important;
+        flex-direction: row;       
+        flex-wrap: wrap;           
+        justify-content: center !important; 
+        width: 100%;
+        padding: 0;
+        gap: 20px;
+    }
+
+    /* Add a shadow to text so it pops off the video */
+    .nav-links li a {
+        font-size: 14px;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.8); /* Critical for readability */
+    }
+    
+    /* Remove the padding push so the video sits BEHIND the nav */
+    .hero-section {
+        padding-top: 0 !important; 
+    }
+}
+
+@media (max-width: 768px) { .nav-links, .hidden-on-mobile { display: none; } .navbar { justify-content: center; } }

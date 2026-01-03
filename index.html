@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magnet | Social Media & Content Creation</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="#home" class="logo-container">
+            <img src="images/logo_nav.png" alt="MAGNET" class="site-logo">
+        </a>
+        <ul class="nav-links">
+            <li><a href="#featured" data-en="Featured" data-ar="أعمالنا">Featured</a></li>
+            <li><a href="#catalog" data-en="Catalog" data-ar="الكتالوج">Catalog</a></li>
+            <li><a href="#contact" data-en="Contact" data-ar="تواصل معنا">Contact</a></li>
+            <li><button id="lang-btn" onclick="toggleLanguage()">🇺🇸 / 🇯🇴</button></li>
+        </ul>
+    </nav>
+
+    <section id="home" class="hero-section">
+        <video autoplay muted loop playsinline id="bg-video">
+            <source src="videos/magnet_hero.mp4" type="video/mp4">
+        </video>
+        
+        <div class="overlay"></div>
+
+        <div class="hero-content">
+            <h1 class="en">MAGNET <span class="highlight">SOCIAL</span></h1>
+            <p class="hero-sub en">Dominating the Feed.</p>
+            <a href="#featured" class="btn btn-glow en">See The Hype</a>
+
+            <h1 class="ar">ماجنيت <span class="highlight">ميديا</span></h1>
+            <p class="hero-sub ar">هيمن على المشهد الرقمي.</p>
+            <a href="#featured" class="btn btn-glow ar">شاهد النتائج</a>
+        </div>
+    </section>
+
+    <section id="about" class="container about-section">
+        <div class="mission-box">
+            <h2 class="en">We Are <span class="highlight">MAGNET</span></h2>
+            <h2 class="ar">نحن <span class="highlight">ماجنيت</span></h2>
+            
+            <div class="divider divider-blue"></div>
+            
+            <p class="mission-text en">
+                <strong>ABOUT MAGNET</strong><br>
+                We don’t make ads people skip; we make content people watch.<br><br>
+                We are a full-service social media and video production team helping businesses grow. 
+                By combining viewer psychology with algorithmic strategy, we create custom content that 
+                feels like entertainment, not marketing.
+                <br><br>
+                From video production to account management, we adapt our style to fit your brand perfectly.
+            </p>
+
+            <p class="mission-text ar">
+                <strong>عن ماجنيت</strong><br>
+                لا نصنع إعلانات يتم تخطيها؛ بل نصنع محتوى يرغب الناس بمشاهدته.<br><br>
+                نحن فريق متكامل للإنتاج المرئي وإدارة منصات التواصل الاجتماعي. 
+                من خلال دمج سيكولوجية المشاهد مع استراتيجيات الخوارزميات، نبتكر محتوى مخصصاً 
+                يبدو كأنه ترفيه، وليس مجرد تسويق.
+                <br><br>
+                من إنتاج الفيديو إلى إدارة الحسابات، نكيّف أسلوبنا ليناسب علامتك التجارية بامتياز.
+            </p>
+        </div>
+    </section>
+
+<section id="featured" class="container z-index-up">
+        <h2>
+            <span class="red-accent en">Featured</span> <span class="en">Campaigns</span>
+            <span class="red-accent ar">أبرز</span> <span class="ar">الحملات</span>
+        </h2>
+        <div class="divider divider-red"></div>
+         <p class="subtitle">
+            <span class="en">Hand-picked highlights from our portfolio.</span>
+            <span class="ar">مختارات مميزة من أفضل أعمالنا.</span>
+        </p>
+        
+        <div class="reels-grid featured-grid">
+            <div class="reel-card">
+                <div class="video-wrapper-clean">
+                    <video controls class="clean-video" poster="images/thumb1.jpg">
+                        <source src="videos/feat1.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <h3>
+                    <span class="en"></span>
+                    <span class="ar"></span>
+                </h3>
+            </div>
+
+            <div class="reel-card">
+                <div class="video-wrapper-clean">
+                    <video controls class="clean-video" poster="images/thumb2.jpg">
+                        <source src="videos/feat2.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <h3>
+                    <span class="en"></span>
+                    <span class="ar"></span>
+                </h3>
+            </div>
+
+            <div class="reel-card">
+                <div class="video-wrapper-clean">
+                    <video controls class="clean-video" poster="images/thumb3.jpg">
+                        <source src="videos/feat3.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <h3>
+                    <span class="en"></span>
+                    <span class="ar"></span>
+                </h3>
+            </div>
+        </div>
+    </section>
+
+<section id="catalog" class="container section-darker">
+        <h2>
+            <span class="en">The Content <span class="blue-accent">Catalog</span></span>
+            <span class="ar"><span class="blue-accent">كتالوج</span> المحتوى</span>
+        </h2>
+        <div class="divider divider-blue"></div>
+        
+        <p class="subtitle">
+            <span class="en">Fresh pulls from the Magnet archive.</span>
+            <span class="ar">مقتطفات حديثة من أرشيف ماجنيت.</span>
+        </p>
+
+        <div class="controls">
+            <button onclick="loadRandomReels()" class="refresh-btn">
+                <span class="en">🔄 Shuffle Feed</span>
+                <span class="ar">🔄 تحديث الفيديوهات</span>
+            </button>
+        </div>
+        
+        <div class="reels-grid catalog-grid">
+            <div class="reel-card"><div class="insta-wrapper" id="slot-1"></div></div>
+            <div class="reel-card"><div class="insta-wrapper" id="slot-2"></div></div>
+            <div class="reel-card"><div class="insta-wrapper" id="slot-3"></div></div>
+        </div>
+    </section>
+
+    <section id="contact" class="container footer-section">
+        <h2 class="en">Ready To Go Viral?</h2>
+        <h2 class="ar">جاهز لتصدر التريند؟</h2>
+        
+        <div class="contact-details">
+            <a href="mailto:info@magnetjordan.com" class="contact-link">
+                <span class="en">✉️ Email Us</span>
+                <span class="ar">✉️ راسلنا عبر الإيميل</span>
+            </a>
+
+            <a href="tel:+962780611448" class="contact-link">
+                📞 +962 780 611 448
+            </a>
+
+            <a href="https://www.instagram.com/magnet.jordan/" target="_blank" class="contact-link">
+                <span class="en">📸 Visit Our Instagram</span>
+                <span class="ar">📸 تابعنا على انستغرام</span>
+            </a>
+        </div>
+
+        <div class="footer-branding">
+            <img src="images/logo_footer.png" alt="Magnet Media" class="footer-logo">
+            <p class="copyright">&copy; 2026 Magnet Media.</p>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
