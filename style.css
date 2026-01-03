@@ -419,4 +419,17 @@ body.arabic-mode .nav-links {
     }
 }
 
+/* === WHATSAPP SPECIFIC STYLE === */
+.whatsapp-style:hover {
+    background: #25D366 !important; /* WhatsApp Green */
+    border-color: #25D366 !important;
+    color: white !important;
+    box-shadow: 0 0 20px rgba(37, 211, 102, 0.4);
+}
+
+/* Ensure icons have space in RTL/LTR */
+.contact-link i {
+    font-size: 1.2rem;
+}
+
 @media (max-width: 768px) { .nav-links, .hidden-on-mobile { display: none; } .navbar { justify-content: center; } }
